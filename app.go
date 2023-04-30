@@ -2,6 +2,9 @@ package weeon
 
 import (
 	"context"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gin-gonic/gin"
 	"github.com/weeon/weeon/transport"
@@ -30,6 +33,9 @@ func New(ctx context.Context, cfg *Config) AppInterface {
 
 func (a *App) Run() error {
 	a.setupTransport()
+
+	// wait os signal
+	a.waitSignal()
 	return nil
 }
 
@@ -50,4 +56,16 @@ func (a *App) setupTransport() {
 			}
 		}(s)
 	}
+}
+
+func (a *App) waitSignal() {
+	// wait os signal
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	<-c
+	err := a.Shutdown(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	os.Exit(0)
 }
