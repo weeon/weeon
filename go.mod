@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/gin-gonic/gin v1.9.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.41.0
+	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53
 	google.golang.org/grpc v1.54.0
 )
 
