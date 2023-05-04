@@ -22,7 +22,7 @@ type App struct {
 	servers []transport.Server
 }
 
-func New(ctx context.Context, cfg *Config) contract.AppInterface {
+func New(ctx context.Context, cfg *Config) contract.App {
 	return &App{
 		config: cfg,
 	}

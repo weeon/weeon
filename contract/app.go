@@ -1,6 +1,6 @@
 package contract
 
-type AppInterface interface {
+type App interface {
 	Run() error
 	Service() string
 	Env() string
