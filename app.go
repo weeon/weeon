@@ -46,7 +46,7 @@ func (a *App) Shutdown(ctx context.Context) error {
 func (a *App) setupTransport() {
 	a.servers = make([]transport.Server, 0)
 	if a.config.HTTPRouter != nil {
-		a.servers = append(a.servers, http.NewGinServer(a.config.HTTPRouter))
+		a.servers = append(a.servers, http.NewGinServer(a.config.HTTPRouter, a.config.Service))
 	}
 
 	for _, s := range a.servers {
