@@ -7,13 +7,10 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
+	"github.com/weeon/weeon/contract"
 	"github.com/weeon/weeon/transport"
 	"github.com/weeon/weeon/transport/http"
 )
-
-type AppInterface interface {
-	Run() error
-}
 
 type Config struct {
 	Service    string
@@ -25,7 +22,7 @@ type App struct {
 	servers []transport.Server
 }
 
-func New(ctx context.Context, cfg *Config) AppInterface {
+func New(ctx context.Context, cfg *Config) contract.AppInterface {
 	return &App{
 		config: cfg,
 	}
@@ -37,6 +34,15 @@ func (a *App) Run() error {
 	// wait os signal
 	a.waitSignal()
 	return nil
+}
+
+func (a *App) Service() string {
+	return a.config.Service
+}
+
+// @todo
+func (a *App) Env() string {
+	return ""
 }
 
 func (a *App) Shutdown(ctx context.Context) error {
